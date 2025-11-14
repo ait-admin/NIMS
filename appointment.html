@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Revisit</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 10mm;
+        }
+        
+        @media print {
+            body { 
+                margin: 0; 
+                padding: 0;
+                background: white;
+            }
+            .no-print { display: none !important; }
+            .nims-slip { box-shadow: none; }
+        }
+        
+        .nims-slip { 
+            width: 210mm; 
+            min-height: 250mm;
+            margin: 0 auto; 
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        /* Header Section */
+        .nims-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8mm 8mm 4mm 8mm;
+            border-bottom: 2px solid #0066cc;
+        }
+        
+        .nims-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8mm;
+            flex: 1;
+        }
+        
+        .nims-logo {
+            width: 18mm;
+            height: 18mm;
+            object-fit: contain;
+        }
+        
+        .nims-title-section {
+            flex: 1;
+        }
+        
+        .nims-main-title {
+            color: #0066cc;
+            font-size: 16pt;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        
+        .nims-subtitle {
+            color: #666;
+            font-size: 8pt;
+            margin-top: 2px;
+            letter-spacing: 0.3px;
+        }
+        
+        .nims-contact {
+            text-align: right;
+            font-size: 8pt;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        /* Document Title Section */
+        .nims-doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5mm 8mm;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .doc-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .doc-dates {
+            font-size: 9pt;
+            color: #666;
+            text-align: right;
+        }
+        
+        .doc-dates div {
+            margin-bottom: 2px;
+        }
+        
+        /* Patient Details Grid */
+        .patient-details {
+            padding: 5mm 8mm;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .detail-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8mm;
+            margin-bottom: 3mm;
+        }
+        
+        .detail-item {
+            font-size: 9pt;
+            color: #333;
+        }
+        
+        .detail-label {
+            font-weight: normal;
+            color: #666;
+        }
+        
+        .detail-value {
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .opd-days {
+            margin-top: 3mm;
+            padding: 2mm 0;
+            font-size: 9pt;
+        }
+        
+        /* Main Content Area with Two Columns */
+        .content-area {
+            display: grid;
+            grid-template-columns: 80mm 1fr;
+            min-height: 160mm;
+            position: relative;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+            margin: 0 8mm;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.08;
+            width: 80mm;
+            height: auto;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .investigations-section {
+            border-right: 1px solid #000;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 4mm;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .prescriptions-section {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 4mm;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-title {
+            font-size: 10pt;
+            font-weight: bold;
+            margin-bottom: 3mm;
+            color: #000;
+        }
+        
+        .case-seen {
+            font-size: 8pt;
+            color: #666;
+            margin-top : 3mm
+            margin-bottom: 2mm;
+        }
+        
+        /* Footer */
+        .nims-footer {
+            padding: 3mm 8mm;
+            font-size: 8pt;
+            color: #666;
+            text-align: right;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .no-print {
+            text-align: center;
+            padding: 20px;
+            font-size: 14pt;
+            color: #666;
+            margin-top: 10mm;
+        }
+    </style>
+</head>
+<body>
+    <div class="nims-slip">
+        <!-- Header -->
+        <div class="nims-header">
+            <div class="nims-header-left">
+                <img src="/static/nims_logo.png" alt="NIMS Logo" class="nims-logo" onerror="this.style.display='none'" />
+                <div class="nims-title-section">
+                    <div class="nims-main-title">NIZAM'S INSTITUTE OF MEDICAL SCIENCES</div>
+                    <div class="nims-subtitle">A UNIVERSITY ESTABLISHED UNDER STATE ACT</div>
+                </div>
+            </div>
+            <div class="nims-contact">
+                <div>040-23489000 / 9144</div>
+                <div>Fax: 040-23310000</div>
+                <div>Panjagutta, Hyderabad - 500082</div>
+                <div>www.nims.edu.in</div>
+            </div>
+        </div>
+        
+        <!-- Document Header -->
+        <div class="nims-doc-header">
+            <div class="doc-title">Patient Revisit</div>
+            <div class="doc-dates">
+                <div><strong>Visit Date:</strong> {{ appointment_time_display }}</div>
+                <div><strong>Valid Upto:</strong> {{ valid_upto_time_display }}</div>
+            </div>
+        </div>
+        
+        <!-- Patient Details -->
+        <div class="patient-details">
+            <div class="detail-row">
+                <div class="detail-item">
+                    <span class="detail-label">CR No:</span> 
+                    <span class="detail-value">{{ cr_number }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Category:</span> 
+                    <span class="detail-value">General</span>
+                </div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-item">
+                    <span class="detail-label">Patient Name:</span> 
+                    <span class="detail-value">{{ name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Department/Unit:</span> 
+                    <span class="detail-value">{{ department }}</span>
+                </div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-item">
+                    <span class="detail-label">Age/Gender:</span> 
+                    <span class="detail-value">{{Age}}/{{Gender}}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Doctor:</span> 
+                    <span class="detail-value">{{ doctor }}</span>
+                </div>
+            </div>
+            
+            <div class="opd-days">
+                <span class="detail-label">OPD Days:</span> 
+                <span class="detail-value">Mon Tue Wed Thu Fri Sat</span>
+            </div>
+
+            <div class="case-seen">Case Seen By:</div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <img class="watermark" src="/static/nims_watermark.png" alt="Watermark" onerror="this.style.display='none'" />
+            
+            <!-- Left Column: Investigations -->
+            <div class="investigations-section">
+                <div class="section-title">Investigations</div>
+            </div>
+            
+            <!-- Right Column: Prescriptions -->
+            <div class="prescriptions-section">
+                <div class="section-title">Clinical Notes/Prescriptions</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="nims-footer">
+            <div>{{ appointment_time_display }}</div>
+        </div>
+    </div>
+    
+    <div class="no-print">Printing... You will be redirected to Home shortly.</div>
+    
+    <script>
+        // Fire-and-forget TTS so audio plays while dialog/form shows
+        (function(){
+            function playTTS(text) {
+                var msg = String(text || '').trim();
+                if (!msg) return;
+                try {
+                    fetch('/tts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text: msg })
+                    }).then(function(res){
+                        if (!res.ok) throw new Error('tts_failed');
+                        return res.blob();
+                    }).then(function(blob){
+                        try {
+                            var audio = document.createElement('audio');
+                            audio.setAttribute('playsinline', '');
+                            audio.style.display = 'none';
+                            document.body.appendChild(audio);
+                            var url = URL.createObjectURL(blob);
+                            audio.src = url;
+                            var p = audio.play();
+                            if (p && typeof p.then === 'function') { p.catch(function(){}); }
+                        } catch(e) {}
+                    }).catch(function(){});
+                } catch (e) {}
+            }
+            var doctor = '{{ doctor }}' || 'డాక్టర్';
+            var timeText = '{{ appointment_time_display }}' || 'నిర్దేశిత సమయం';
+            var message = 'మీ అపాయింట్‌మెంట్ ' + doctor + ' వద్ద ' + timeText + 'కి బుక్ అయింది.';
+            playTTS(message);
+        })();
+    </script>
+    <script>
+        // Trigger print automatically and then return to home
+        window.addEventListener('load', function() {
+            setTimeout(function(){
+                window.print();
+                setTimeout(function(){
+                    window.location.href = '/';
+                }, 5000);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

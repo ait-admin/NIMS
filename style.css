@@ -1,0 +1,153 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background: #f5f7fb;
+	color: #222;
+}
+
+.nims-header {
+    background: #ffffff;
+    color: #ffffff;
+    padding: 16px 20px;
+    text-align: center;
+}
+.nims-brand { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.nims-logo { width: 40px; height: 40px; background: #ffffff22; border-radius: 50%; }
+.nims-title { font-weight: 700; letter-spacing: .5px; }
+.nims-subtitle { font-size: 12px; opacity: .9; margin-top: 4px; }
+
+/* Header for slip */
+.nims-hdr { display:flex; justify-content:space-between; align-items:flex-start; padding: 10px 14px; background:#fff; }
+.nims-hdr-left { display:flex; align-items:center; gap:10px; }
+.nims-hdr-logo { height: 42px; width:auto; }
+.nims-hdr-text { line-height: 1.1; }
+.nims-hdr-title { color:#164181; font-weight:700; font-size:18px; letter-spacing:.4px; }
+.nims-hdr-sub { color:#6b7280; font-size:12px; }
+.nims-hdr-right { text-align:right; color:#164181; font-size:12px; }
+
+.kiosk-container {
+    max-width: 900px;
+	margin: 5vh auto;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+	padding: 40px;
+	text-align: center;
+}
+
+h1 {
+	margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 32px;
+}
+
+.instruction {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+#crInput {
+    width: 100%;
+    font-size: 28px;
+    padding: 16px 20px;
+    border: 2px solid #cfd8dc;
+    border-radius: 8px;
+}
+
+#crInput:focus {
+    border-color: #1976d2;
+}
+
+.status {
+    min-height: 28px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.status.error {
+    color: #c62828;
+}
+
+.status.success {
+    color: #2e7d32;
+}
+
+.footer {
+    margin-top: 40px;
+    color: #607d8b;
+    font-size: 14px;
+}
+
+.keypad {
+    margin: 24px auto 10px;
+    width: 320px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.keypad .key {
+    font-size: 22px;
+    padding: 14px 0;
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    background: #f7fafc;
+    cursor: pointer;
+}
+.keypad .key.action { background: #ffeef0; }
+.actions { display: flex; justify-content: center; gap: 12px; margin-top: 8px; }
+.actions .primary { background: #0b4aa2; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+.actions .secondary { display: inline-block; padding: 10px 16px; border-radius: 8px; border: 1px solid #cfd8dc; color: #0b4aa2; text-decoration: none; }
+
+.slip-body {
+    background: #fff;
+}
+
+.slip {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 12mm 15mm;
+    color: #000;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.slip-header { text-align: center; font-weight: bold; font-size: 18px; }
+.slip-footer { text-align: center; margin-top: 12px; }
+
+.slip .title {
+    margin: 12px 0;
+    font-weight: bold;
+}
+
+.center { text-align: center; }
+
+@media print {
+    .no-print { display: none !important; }
+    body { margin: 0; background: #fff; }
+    .kiosk-container, .nims-header { display: none !important; }
+}
+
+/* Slip specific overrides for NIMS format */
+.nims-slip { background:#fff; }
+.nims-topbar { background:#0b4aa2; }
+.nims-header.title { color:#0b4aa2; }
+.nims-panel { min-height: 160mm; }
+.nims-panel.left { border-right:1px solid #999; }
+
+/* Ensure brand colors print exactly */
+@media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .nims-topbar { background:#0b4aa2 !important; }
+    .nims-line { background:#0b4aa2 !important; }
+    .nims-header.title { color:#0b4aa2 !important; }
+}
+
+
+

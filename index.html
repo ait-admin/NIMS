@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NIMS Self Check-In Kiosk</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div class="nims-header">
+        <div class="nims-brand">
+            <div class="nims-logo" aria-hidden="true"></div>
+            <div class="nims-title">NIZAM'S INSTITUTE OF MEDICAL SCIENCES</div>
+        </div>
+        <div class="nims-subtitle">A University Established Under State Act</div>
+    </div>
+
+    <div class="kiosk-container">
+        <h1>NIMS Self Check-In Kiosk</h1>
+        <p class="instruction">Enter or scan your CR Number for valid Re-Visit only.</p>
+
+        <form id="kioskForm" autocomplete="off">
+            <input id="crInput" name="cr_number" type="text" inputmode="numeric" autofocus placeholder="Enter CR Number" />
+        </form>
+
+        <div class="keypad" role="group" aria-label="On-screen keypad">
+            <button type="button" class="key">1</button>
+            <button type="button" class="key">2</button>
+            <button type="button" class="key">3</button>
+            <button type="button" class="key">4</button>
+            <button type="button" class="key">5</button>
+            <button type="button" class="key">6</button>
+            <button type="button" class="key">7</button>
+            <button type="button" class="key">8</button>
+            <button type="button" class="key">9</button>
+            <button type="button" class="key action" data-action="clear">CLEAR</button>
+            <button type="button" class="key">0</button>
+            <button type="button" class="key action" data-action="backspace">⌫</button>
+        </div>
+
+        <div class="actions">
+            <button id="submitBtn" class="primary" type="button">Submit</button>
+            <a class="secondary" href="/">Home</a>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="footer">Nizam's Institute of Medical Sciences (NIMS)</div>
+    </div>
+
+    <script>
+        // Auto-submit when CR length meets minimum (avoid accidental single-key submits)
+        (function() {
+            const form = document.getElementById('kioskForm');
+            const crInput = document.getElementById('crInput');
+            const MIN_LEN = 6; // adjust if needed
+            let isSubmitting = false;
+
+            function triggerSubmit() {
+                if (isSubmitting) return;
+                const value = (crInput.value || '').trim();
+                if (value.length < MIN_LEN) return;
+                isSubmitting = true;
+                if (form && typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    document.getElementById('submitBtn').click();
+                }
+            }
+
+            crInput.addEventListener('input', function() {
+                triggerSubmit();
+            });
+        })();
+    </script>
+    <script src="/static/script.js"></script>
+</body>
+<style>
+/* Inline safety to ensure focus behavior if CSS fails to load */
+#crInput:focus { outline: 3px solid #1976d2; }
+</style>
+</html>
